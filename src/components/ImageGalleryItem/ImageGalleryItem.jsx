@@ -1,5 +1,6 @@
 import { ModalWindow } from 'components/Modal/Modal';
 import { Component } from 'react';
+import { Image } from './ImageGalleryItem.styled';
 
 //обов. передаємо в ключ кожної картинки - id
 // export const ImageGalleryItem = ({ src, alt, id, handleOpen }) => {
@@ -33,7 +34,7 @@ export class ImageGalleryItem extends Component {
     return (
       <div>
         <li onClick={this.openModal} key={this.props.id}>
-          <img src={this.props.src} alt={this.props.alt} width="300" />
+          <Image src={this.props.src} alt={this.props.alt} width="300" />
         </li>
         <ModalWindow
           status={isOpen}

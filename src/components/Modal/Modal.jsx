@@ -8,14 +8,16 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    backgroundColor: '#c0c0c0',
   },
-  overlay: { backGround: 'grey' },
+  overlay: {
+    backgroundColor: 'grey',
+  },
 };
 Modal.setAppElement('#root');
 export const ModalWindow = ({ status, close, src, alt }) => {
   return (
     <div>
-      {/* <button onClick={openModal}>Open Modal</button> */}
       <Modal
         isOpen={status}
         onRequestClose={close}

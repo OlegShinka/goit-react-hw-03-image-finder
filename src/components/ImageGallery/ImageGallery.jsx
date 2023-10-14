@@ -1,9 +1,9 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
-
+import { List } from './ImageGallery.styled';
 export const ImageGallery = ({ hits, handleOpen }) => {
   return (
     <div>
-      <ul>
+      <List>
         {hits.map(({ id, webformatURL, largeImageURL, tags }) => (
           <ImageGalleryItem
             key={id}
@@ -13,7 +13,7 @@ export const ImageGallery = ({ hits, handleOpen }) => {
             srcLarge={largeImageURL}
           />
         ))}
-      </ul>
+      </List>
       ;
     </div>
   );

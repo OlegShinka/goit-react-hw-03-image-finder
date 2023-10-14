@@ -4,6 +4,7 @@ import { FetchImages } from './api';
 import { Form } from './searchbar/searchbar';
 import { Loader } from './Loader/Loader';
 import { Button } from './Button/Button';
+import { Layout } from './Layuot';
 
 export class App extends Component {
   state = {
@@ -66,7 +67,7 @@ export class App extends Component {
   render() {
     const { hits, loading, error } = this.state;
     return (
-      <div>
+      <Layout>
         <Form onSubmitForm={this.handleSearch} />
 
         {loading && <Loader />}
@@ -75,7 +76,7 @@ export class App extends Component {
           <ImageGallery hits={hits} handleOpen={this.handleOpen} />
         )}
         {hits.length > 0 && <Button handleLoadMore={this.handleLoadMore} />}
-      </div>
+      </Layout>
     );
   }
 }

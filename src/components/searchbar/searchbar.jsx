@@ -1,5 +1,5 @@
 import { Component } from 'react';
-
+import { BtnSearchBar, InpSearch, FormSearch } from './searchbar.styled';
 export class Form extends Component {
   state = {
     value: '',
@@ -21,8 +21,8 @@ export class Form extends Component {
   render() {
     return (
       <header>
-        <form onSubmit={this.handleSubmit}>
-          <input
+        <FormSearch onSubmit={this.handleSubmit}>
+          <InpSearch
             type="text"
             value={this.state.value}
             name="value"
@@ -31,10 +31,10 @@ export class Form extends Component {
             placeholder="Search images and photos"
             onChange={this.handleChange}
           />
-          <button type="submit">
+          <BtnSearchBar type="submit">
             <span>Search</span>
-          </button>
-        </form>
+          </BtnSearchBar>
+        </FormSearch>
       </header>
     );
   }
