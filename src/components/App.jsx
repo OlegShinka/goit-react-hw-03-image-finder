@@ -2,6 +2,8 @@ import { Component } from 'react';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { FetchImages } from './api';
 import { Form } from './searchbar/searchbar';
+import { Loader } from './Loader/Loader';
+import { Button } from './Button/Button';
 
 export class App extends Component {
   state = {
@@ -57,20 +59,22 @@ export class App extends Component {
       page: prev.page + 1,
     }));
   };
+
+  handleOpen = () => {
+    console.log('OPEN');
+  };
   render() {
     const { hits, loading, error } = this.state;
     return (
       <div>
         <Form onSubmitForm={this.handleSearch} />
 
-        {loading && <p> Loading...</p>}
-        {error && <p>Ups...</p>}
-        {hits.length > 0 && <ImageGallery hits={hits} />}
+        {loading && <Loader />}
+        {error && <p> Reload page please ...</p>}
         {hits.length > 0 && (
-          <button type="button" onClick={this.handleLoadMore}>
-            Loadmore
-          </button>
+          <ImageGallery hits={hits} handleOpen={this.handleOpen} />
         )}
+        {hits.length > 0 && <Button handleLoadMore={this.handleLoadMore} />}
       </div>
     );
   }

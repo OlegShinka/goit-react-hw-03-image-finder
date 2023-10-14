@@ -1,35 +1,47 @@
-import Modal from 'react-modal';
+import { ModalWindow } from 'components/Modal/Modal';
+import { Component } from 'react';
 
-// const customStyles = {
-//   content: {
-//     top: '50%',
-//     left: '50%',
-//     right: 'auto',
-//     bottom: 'auto',
-//     marginRight: '-50%',
-//     transform: 'translate(-50%, -50%)',
-//   },
-// };
-Modal.setAppElement('#root');
 //обов. передаємо в ключ кожної картинки - id
-export const ImageGalleryItem = ({ src, alt, id }) => {
-  return (
-    <div>
-      <li key={id}>
-        <img src={src} alt={alt} width="200" />
-      </li>
+// export const ImageGalleryItem = ({ src, alt, id, handleOpen }) => {
+//   return (
+//     <div>
+//       <li onClick={handleOpen} key={id}>
+//         <img src={src} alt={alt} width="200" />
+//       </li>
+//       <ModalWindow />
 
-      {/* <button>Open Modal</button>
-      <Modal
-        //isOpen={modalIsOpen}
-        //isOpen={true}
-        //onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <button>close</button>
-        <div>I am a modal</div>
-      </Modal> */}
-    </div>
-  );
-};
+//     </div>
+//   );
+// };
+
+export class ImageGalleryItem extends Component {
+  state = {
+    isOpen: false,
+  };
+  openModal = () => {
+    this.setState({
+      isOpen: true,
+    });
+  };
+  closeModal = () => {
+    this.setState({
+      isOpen: false,
+    });
+  };
+  render() {
+    const { isOpen } = this.state;
+    return (
+      <div>
+        <li onClick={this.openModal} key={this.props.id}>
+          <img src={this.props.src} alt={this.props.alt} width="300" />
+        </li>
+        <ModalWindow
+          status={isOpen}
+          close={this.closeModal}
+          src={this.props.srcLarge}
+          alt={this.props.alt}
+        />
+      </div>
+    );
+  }
+}
