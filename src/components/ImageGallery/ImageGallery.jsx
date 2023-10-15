@@ -1,6 +1,6 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { List } from './ImageGallery.styled';
-export const ImageGallery = ({ hits, handleOpen }) => {
+export const ImageGallery = ({ hits }) => {
   return (
     <div>
       <List>
@@ -9,7 +9,6 @@ export const ImageGallery = ({ hits, handleOpen }) => {
             key={id}
             src={webformatURL}
             alt={tags}
-            handleOpen={handleOpen}
             srcLarge={largeImageURL}
           />
         ))}

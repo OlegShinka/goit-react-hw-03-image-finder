@@ -11,24 +11,10 @@ export class App extends Component {
     loading: false,
     error: false,
     hits: [],
-    querry: 'cat',
+    querry: '',
     page: 1,
+    isLoadMore: false,
   };
-
-  async componentDidMount() {
-    try {
-      // первинні значення
-      this.setState({ loading: true, error: false });
-      // виклик фу запиту на бекенд при первинному монтуванні застосунку
-      const images = await FetchImages(this.state.querry, this.state.page);
-
-      this.setState({ hits: images });
-    } catch (error) {
-      this.setState({ error: true });
-    } finally {
-      this.setState({ loading: false });
-    }
-  }
 
   async componentDidUpdate(prevProps, prevState) {
     // по умові обов'яково - при зміні state чи при зміні сторінки
@@ -38,11 +24,23 @@ export class App extends Component {
     ) {
       try {
         // виклик фу запиту на бекенд з аргументами терміну пошуку та номер стор.
-        const images = await FetchImages(this.state.querry, this.state.page);
-        // до попереднього масиву зобр. додаємо нову порцію за запитом при кліку на Loadmore Обов. розпилюємо масиви
+        const dates = await FetchImages(this.state.querry, this.state.page);
+        const totalHits = dates.totalHits;
+        // по заг.кількості картинок обчис екранних стор. при per-page=12
+        const totalPage = Math.ceil(totalHits / 12);
+        // до попереднього масиву зобр. додаємо нову порцію за запитом при кліку на Loadmore Обов. розпилюємо масив
         this.setState(prev => ({
-          hits: [...prev.hits, ...images],
+          hits: [...prev.hits, ...dates.hits],
         }));
+        // вмикаємо кнопку Load More при зміні стану
+        if (this.state.page < totalPage) {
+          this.setState({
+            isLoadMore: true,
+          });
+        } else
+          this.setState({
+            isLoadMore: false,
+          });
       } catch (error) {
         this.setState({ error: true });
       } finally {
@@ -61,21 +59,19 @@ export class App extends Component {
     }));
   };
 
-  handleOpen = () => {
-    console.log('OPEN');
-  };
   render() {
-    const { hits, loading, error } = this.state;
+    const { hits, loading, error, isLoadMore } = this.state;
+    //const totalPage = 1;
+    if (hits.length > 0) {
+    }
     return (
       <Layout>
         <Form onSubmitForm={this.handleSearch} />
 
         {loading && <Loader />}
         {error && <p> Reload page please ...</p>}
-        {hits.length > 0 && (
-          <ImageGallery hits={hits} handleOpen={this.handleOpen} />
-        )}
-        {hits.length > 0 && <Button handleLoadMore={this.handleLoadMore} />}
+        {hits.length > 0 && <ImageGallery hits={hits} />}
+        {isLoadMore && <Button handleLoadMore={this.handleLoadMore} />}
       </Layout>
     );
   }

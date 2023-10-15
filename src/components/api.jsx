@@ -6,5 +6,13 @@ export const FetchImages = async (q, p) => {
   const response = await axios.get(
     `/?q=${q}&page=${p}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
   );
-  return response.data.hits;
+
+  return response.data;
 };
+// export const FetchData = async (q, p) => {
+//   const response = await axios.get(
+//     `/?q=${q}&page=${p}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
+//   );
+
+//   return response;
+// };
